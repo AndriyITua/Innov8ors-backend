@@ -7,6 +7,8 @@ import { env } from './utils/env.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
+import { authRouetr } from './routers/auth.js';
+
 const PORT = Number(env('PORT', '3000'));
 
 export const startServer = () => {
@@ -28,6 +30,8 @@ export const startServer = () => {
       },
     }),
   );
+
+  app.use('/auth', authRouetr);
 
   app.get('/', (req, res) => {
     res.json({
