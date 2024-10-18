@@ -1,6 +1,6 @@
-export const notFoundHandler = (req, res, next) => {
+export default function notFoundHandler(req, res) {
   res.status(404).json({
     status: 404,
-    message: 'Date not found',
+    message: `${req.url} not found`,
   });
-};
+}
