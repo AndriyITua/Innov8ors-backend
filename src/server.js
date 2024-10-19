@@ -6,10 +6,11 @@ import { env } from './utils/env.js';
 import logger from './middlewares/logger.js';
 import errorHandler from './middlewares/errorHandler.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
+import cookieParser from 'cookie-parser';
 
 import waterRouter from './routers/water.js';
 
-import { authRouetr } from './routers/auth.js';
+import { authRouter } from './routers/auth.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -24,8 +25,11 @@ export const startServer = () => {
       limit: '100kb',
     }),
   );
+  app.use(cookieParser());
 
-  app.use('/auth', authRouetr);
+
+  app.use('/auth', authRouter);
+
   app.use('/water', waterRouter);
 
   app.use(notFoundHandler);
