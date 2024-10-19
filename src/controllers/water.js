@@ -6,6 +6,9 @@ import {
   deleteWaterConsumption,
 } from '../services/water.js';
 
+import WaterCollection from '../db/models/Water.js';
+import WaterRateCollection from '../db/models/WaterRate.js';
+
 export const updateWaterRateController = async (req, res) => {
   let { dailyRate } = req.body;
 
@@ -64,4 +67,97 @@ export const deleteWaterConsumptionController = async (req, res) => {
   if (!data) throw createHttpError(404, `Water record with id=${id} not found`);
 
   res.status(204).send();
+};
+
+export const getTodayWaterController = async (req, res) => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const waterRecords = await WaterCollection.find({
+      createdAt: { $gte: today },
+    });
+
+    if (waterRecords.length === 0) {
+      return res.status(404).json({
+        status: 404,
+        message: 'No water consumption records for today',
+      });
+    }
+
+    // Получаем дневную норму
+    const waterRate = await WaterRateCollection.findOne();
+    const dailyRate = waterRate ? waterRate.dailyRate : 1500; // Стандартная норма 1.5 литра
+
+    // Рассчитываем общее количество выпитой воды и процент от нормы
+    const totalConsumed = waterRecords.reduce(
+      (acc, record) => acc + record.amount,
+      0,
+    );
+    const percentage = Math.round((totalConsumed / dailyRate) * 100);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Water consumption for today',
+      data: {
+        totalConsumed,
+        dailyRate,
+        percentage,
+        records: waterRecords,
+      },
+    });
+  } catch (error) {
+    throw createHttpError(500, 'Internal server error');
+  }
+};
+
+// Новый контроллер для получения потребления воды за месяц
+export const getMonthWaterController = async (req, res) => {
+  try {
+    const { year, month } = req.params;
+
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0);
+
+    const waterRecords = await WaterCollection.find({
+      createdAt: { $gte: startDate, $lt: endDate },
+    });
+
+    if (waterRecords.length === 0) {
+      return res.status(404).json({
+        status: 404,
+        message: 'No water consumption records for the selected month',
+      });
+    }
+
+    // Получаем дневную норму
+    const waterRate = await WaterRateCollection.findOne();
+    const dailyRate = waterRate ? waterRate.dailyRate : 1500;
+
+    // Группируем данные по дням
+    const dailyData = {};
+    waterRecords.forEach((record) => {
+      const day = record.createdAt.getDate();
+      if (!dailyData[day]) dailyData[day] = { totalConsumed: 0, count: 0 };
+      dailyData[day].totalConsumed += record.amount;
+      dailyData[day].count += 1;
+    });
+
+    const result = Object.entries(dailyData).map(([day, data]) => ({
+      date: `${day}, ${startDate.toLocaleString('default', { month: 'long' })}`,
+      dailyRate,
+      percentage: Math.round((data.totalConsumed / dailyRate) * 100),
+      consumptionCount: data.count,
+    }));
+
+    res.status(200).json({
+      status: 200,
+      message: `Water consumption for ${startDate.toLocaleString('default', {
+        month: 'long',
+      })}`,
+      data: result,
+    });
+  } catch (error) {
+    throw createHttpError(500, 'Internal server error');
+  }
 };
