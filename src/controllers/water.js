@@ -85,11 +85,10 @@ export const getTodayWaterController = async (req, res) => {
       });
     }
 
-    // Получаем дневную норму
     const waterRate = await WaterRateCollection.findOne();
-    const dailyRate = waterRate ? waterRate.dailyRate : 1500; // Стандартная норма 1.5 литра
+    const dailyRate = waterRate ? waterRate.dailyRate : 1500;
 
-    // Рассчитываем общее количество выпитой воды и процент от нормы
+    // count total + %
     const totalConsumed = waterRecords.reduce(
       (acc, record) => acc + record.amount,
       0,
@@ -111,7 +110,6 @@ export const getTodayWaterController = async (req, res) => {
   }
 };
 
-// Новый контроллер для получения потребления воды за месяц
 export const getMonthWaterController = async (req, res) => {
   try {
     const { year, month } = req.params;
@@ -130,11 +128,10 @@ export const getMonthWaterController = async (req, res) => {
       });
     }
 
-    // Получаем дневную норму
     const waterRate = await WaterRateCollection.findOne();
     const dailyRate = waterRate ? waterRate.dailyRate : 1500;
 
-    // Группируем данные по дням
+    // Group data per day
     const dailyData = {};
     waterRecords.forEach((record) => {
       const day = record.createdAt.getDate();
