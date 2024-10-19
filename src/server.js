@@ -25,17 +25,8 @@ export const startServer = () => {
     }),
   );
 
-
   app.use('/auth', authRouetr);
-
-
   app.use('/water', waterRouter);
-
-  app.get('/', (req, res) => {
-    res.json({
-      message: 'Hello World!',
-    });
-  });
 
   app.use(notFoundHandler);
   app.use(errorHandler);

@@ -1,5 +1,10 @@
 import createHttpError from 'http-errors';
-import { updateWaterRate } from '../services/water.js';
+import {
+  updateWaterRate,
+  addWaterConsumption,
+  updateWaterConsumption,
+  deleteWaterConsumption,
+} from '../services/water.js';
 
 export const updateWaterRateController = async (req, res) => {
   let { dailyRate } = req.body;
@@ -23,7 +28,40 @@ export const updateWaterRateController = async (req, res) => {
 
   res.status(status).json({
     status,
-    message: 'Water upsert successfully!',
+    message: 'Water rate upsert successfully!',
     data,
   });
+};
+
+export const addWaterConsumptionController = async (req, res) => {
+  const record = await addWaterConsumption(req.body);
+
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully created a water record!',
+    data: record,
+  });
+};
+
+export const updateWaterConsumptionController = async (req, res) => {
+  const { id } = req.params;
+  const { amount } = req.body;
+  const data = await updateWaterConsumption({ _id: id }, amount);
+
+  if (!data) throw createHttpError(404, `Water record with id=${id} not found`);
+
+  res.json({
+    status: 200,
+    message: 'Successfully edited water record!',
+    data,
+  });
+};
+
+export const deleteWaterConsumptionController = async (req, res) => {
+  const { id } = req.params;
+  const data = await deleteWaterConsumption({ _id: id });
+
+  if (!data) throw createHttpError(404, `Water record with id=${id} not found`);
+
+  res.status(204).send();
 };
