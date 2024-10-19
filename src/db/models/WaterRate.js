@@ -14,6 +14,6 @@ const waterRateSchema = new Schema(
   },
 );
 
-const waterRateCollection = model('waterRate', waterRateSchema);
+const WaterRateCollection = model('waterRate', waterRateSchema);
 
-export default waterRateCollection;
+export default WaterRateCollection;

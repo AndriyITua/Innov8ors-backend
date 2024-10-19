@@ -27,14 +27,10 @@ export const startServer = () => {
   );
   app.use(cookieParser());
 
-  app.use('/auth', authRouter);
-  app.use('/water', waterRouter);
 
-  app.get('/', (req, res) => {
-    res.json({
-      message: 'Hello World!',
-    });
-  });
+  app.use('/auth', authRouter);
+
+  app.use('/water', waterRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
