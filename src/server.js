@@ -39,11 +39,11 @@ export const startServer = () => {
     }),
   );
   app.use(cookieParser());
+  app.use(express.static('uploads'));
 
   app.use('/auth', authRouter);
 
   app.use('/water', waterRouter);
-
 
   app.use('/user', userRouter);
 
@@ -52,7 +52,6 @@ export const startServer = () => {
   app.use('/month', monthRouter);
 
   app.use('/api-docs', swaggerDocs());
-
 
   app.use(notFoundHandler);
   app.use(errorHandler);
