@@ -1,23 +1,23 @@
-import WaterRateCollection from '../db/models/WaterRate.js';
+import { UserCollection } from '../db/models/User.js';
 import WaterCollection from '../db/models/Water.js';
 
-export const updateWaterRate = async (data) => {
-  const rawResult = await WaterRateCollection.updateOne({}, data, {
+export const updateWaterRate = async (filter, data) => {
+  const rawResult = await UserCollection.findOneAndUpdate(filter, data, {
+    includeResultMetadata: true,
     upsert: true,
   });
 
-  if (!rawResult) return null;
+  if (!rawResult || !rawResult.value) return null;
 
   return {
-    data,
-    isNew: Boolean(rawResult.upsertedCount),
+    data: rawResult.value,
   };
 };
 
 export const addWaterConsumption = (amount) => WaterCollection.create(amount);
 
 export const updateWaterConsumption = async (filter, newAmount) => {
-  const updatedRecord = await WaterCollection.findByIdAndUpdate(
+  const updatedRecord = await WaterCollection.findOneAndUpdate(
     filter,
     { amount: newAmount },
     { new: true },
@@ -27,4 +27,4 @@ export const updateWaterConsumption = async (filter, newAmount) => {
 };
 
 export const deleteWaterConsumption = async (filter) =>
-  WaterCollection.findByIdAndDelete(filter);
+  WaterCollection.findOneAndDelete(filter);
