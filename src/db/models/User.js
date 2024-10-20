@@ -10,6 +10,12 @@ export const userSchema = new Schema(
       type: String,
       requared: true,
     },
+    gender: {
+      type: String,
+      enum: ['woman', 'man'],
+      default: 'woman',
+      requared: true,
+    },
     email: {
       type: String,
       unique: true,
@@ -24,7 +30,7 @@ export const userSchema = new Schema(
     },
     dailynormwater: {
       type: Number,
-      default: 1.5,
+      default: 15000,
       min: 0,
     },
     userphoto: {

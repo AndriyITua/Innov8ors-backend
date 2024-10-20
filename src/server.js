@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser';
 import waterRouter from './routers/water.js';
 
 import { authRouter } from './routers/auth.js';
+import { userRouter } from './routers/user.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -27,10 +28,11 @@ export const startServer = () => {
   );
   app.use(cookieParser());
 
-
   app.use('/auth', authRouter);
 
   app.use('/water', waterRouter);
+
+  app.use('/user', userRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
