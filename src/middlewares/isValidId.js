@@ -9,3 +9,12 @@ export const isValidId = (req, res, next) => {
 
   next();
 };
+
+export const isValidIdUser = (req, res, next) => {
+  const { id } = req.params;
+  if (!isValidObjectId(id)) {
+    throw createHttpError(400, 'Bad Request');
+  }
+
+  next();
+};

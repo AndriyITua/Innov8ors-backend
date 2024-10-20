@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser';
 import waterRouter from './routers/water.js';
 
 import { authRouter } from './routers/auth.js';
+import { userRouter } from './routers/user.js';
 
 import todayRouter from './routers/today.js';
 import monthRouter from './routers/month.js';
@@ -43,11 +44,15 @@ export const startServer = () => {
 
   app.use('/water', waterRouter);
 
+
+  app.use('/user', userRouter);
+
   app.use('/today', todayRouter);
 
   app.use('/month', monthRouter);
 
   app.use('/api-docs', swaggerDocs());
+
 
   app.use(notFoundHandler);
   app.use(errorHandler);

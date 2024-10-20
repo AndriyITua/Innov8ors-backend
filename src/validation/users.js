@@ -21,3 +21,14 @@ export const resetPasswordSchema = Joi.object({
   password: Joi.string().required(),
   token: Joi.string().required(),
 });
+
+export const patchUserSchema = Joi.object({
+  username: Joi.string(),
+  email: Joi.string().pattern(emailRegexp),
+  gender: Joi.string().valid('woman', 'man'),
+  dailynormwater: Joi.number().min(0),
+});
+
+export const userPhotoSchema = Joi.object({
+  userphoto: Joi.string().uri().required(),
+});
