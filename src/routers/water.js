@@ -2,12 +2,15 @@ import { Router } from 'express';
 
 import { authenticate } from '../middlewares/authenticate.js';
 import { isValidId } from '../middlewares/isValidId.js';
+import { validateDateParams } from '../validation/dateParams.js';
 
 import {
   addWaterConsumptionController,
   updateWaterRateController,
   updateWaterConsumptionController,
   deleteWaterConsumptionController,
+  getTodayWaterController,
+  getMonthWaterController,
 } from '../controllers/water.js';
 
 import validateBody from '../utils/validateBody.js';
@@ -35,6 +38,14 @@ waterRouter.delete(
   '/:id',
   isValidId,
   ctrlWrapper(deleteWaterConsumptionController),
+);
+
+waterRouter.get('/today', ctrlWrapper(getTodayWaterController));
+
+waterRouter.get(
+  '/:year/:month',
+  validateDateParams,
+  ctrlWrapper(getMonthWaterController),
 );
 
 export default waterRouter;
