@@ -26,7 +26,7 @@ export const patchUserSchema = Joi.object({
   username: Joi.string(),
   email: Joi.string().pattern(emailRegexp),
   gender: Joi.string().valid('woman', 'man'),
-  dailynormwater: Joi.number().min(0),
+  dailynormwater: Joi.number().min(0).max(15000),
 });
 
 export const userPhotoSchema = Joi.object({
