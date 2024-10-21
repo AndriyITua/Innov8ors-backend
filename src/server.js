@@ -1,19 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-
-import { env } from './utils/env.js';
-
-import logger from './middlewares/logger.js';
-import errorHandler from './middlewares/errorHandler.js';
-import notFoundHandler from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
 
-import waterRouter from './routers/water.js';
-
-import { authRouter } from './routers/auth.js';
-import { userRouter } from './routers/user.js';
-
+import logger from './middlewares/logger.js';
+import notFoundHandler from './middlewares/notFoundHandler.js';
+import errorHandler from './middlewares/errorHandler.js';
 import swaggerDocs from './middlewares/swaggerDocs.js';
+
+import authRouter from './routers/auth.js';
+import waterRouter from './routers/water.js';
+import userRouter from './routers/user.js';
+
+import { env } from './utils/env.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -21,14 +19,14 @@ export const startServer = () => {
   const app = express();
 
   const corsOptions = {
-    origin: ['https://innov8ors-frontend.vercel.app', 'http://localhost:3000'],
+    origin: ['https://innov8ors-frontend.vercel.app', 'http://localhost:5173'],
     credentials: true,
   };
 
   app.use(cors(corsOptions));
 
   app.use(logger);
-  app.use(cors());
+
   app.use(
     express.json({
       type: ['application/json', 'application/vnd.api+json'],
@@ -36,10 +34,10 @@ export const startServer = () => {
     }),
   );
   app.use(cookieParser());
+  app.use(express.static('uploads'));
 
   app.use('/auth', authRouter);
   app.use('/user', userRouter);
-
   app.use('/water', waterRouter);
 
   app.use('/api-docs', swaggerDocs());

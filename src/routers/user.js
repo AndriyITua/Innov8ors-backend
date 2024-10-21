@@ -6,12 +6,12 @@ import {
 } from '../controllers/user.js';
 import { isValidIdUser } from '../middlewares/isValidId.js';
 import { authenticate } from '../middlewares/authenticate.js';
-// import { upload } from '../middlewares/uploads.js';
+import { upload } from '../middlewares/uploads.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 import validateBody from '../utils/validateBody.js';
-import { patchUserSchema } from '../validation/users.js';
+import { patchUserSchema, userPhotoSchema } from '../validation/users.js';
 
-export const userRouter = Router();
+const userRouter = Router();
 
 userRouter.use(authenticate);
 
@@ -23,3 +23,13 @@ userRouter.patch(
   validateBody(patchUserSchema),
   ctrlWrapper(patchUserController),
 );
+
+userRouter.patch(
+  '/:id/avatar',
+  validateBody(userPhotoSchema),
+  upload.single('userphoto'),
+  isValidIdUser,
+  ctrlWrapper(patchUserController),
+);
+
+export default userRouter;
