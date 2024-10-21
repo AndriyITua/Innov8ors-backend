@@ -23,8 +23,10 @@ properties:
   createdAt:
     description: 'When was created'
     type: string
+    format: date-time
     example: '2024-10-21T15:51:37.344Z'
   updatedAt:
     description: 'When was updated'
     type: string
+    format: date-time
     example: '2024-10-21T15:51:37.344Z'
