@@ -7,7 +7,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is a documentation of water consumption app
 tags:
-  - name: Waters
+  - name: Water
     description: Operations about water consumption.
   - name: Auth
     description: Auth operations.
@@ -15,6 +15,12 @@ servers:
   - url: http://localhost:3000
   - url: http://localhost:3000
 paths:
+  /water/today:
+    get:
+      $ref: ../swagger/paths/water/today/get.yaml
+  /water/{year}/{month}:
+    get:
+      $ref: ../swagger/paths/water/{year}/{month}/get.yaml
 components:
   securitySchemes:
     bearerAuth:
