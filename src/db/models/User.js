@@ -8,13 +8,13 @@ export const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: true,
+      // required: true,
     },
     gender: {
       type: String,
       enum: ['woman', 'man'],
       default: 'woman',
-      required: true,
+      // required: true,
     },
     email: {
       type: String,
@@ -30,9 +30,8 @@ export const userSchema = new Schema(
     },
     dailynormwater: {
       type: Number,
-      default: 1500,
+      default: 15000,
       min: 0,
-      max: 15000,
     },
     userphoto: {
       type: String,
