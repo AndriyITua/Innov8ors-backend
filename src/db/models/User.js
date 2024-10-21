@@ -8,30 +8,31 @@ export const userSchema = new Schema(
   {
     username: {
       type: String,
-      requared: true,
+      required: true,
     },
     gender: {
       type: String,
       enum: ['woman', 'man'],
       default: 'woman',
-      requared: true,
+      required: true,
     },
     email: {
       type: String,
       unique: true,
       match: emailRegexp,
-      requared: true,
+      required: true,
     },
     password: {
       type: String,
-      requared: true,
+      required: true,
       minlength: 8,
       maxlength: 64,
     },
     dailynormwater: {
       type: Number,
-      default: 15000,
+      default: 1500,
       min: 0,
+      max: 15000,
     },
     userphoto: {
       type: String,

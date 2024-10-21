@@ -7,37 +7,38 @@ import {
 } from '../services/water.js';
 
 import WaterCollection from '../db/models/Water.js';
-import WaterRateCollection from '../db/models/WaterRate.js';
+
+import { UserCollection } from '../db/models/User.js';
 
 export const updateWaterRateController = async (req, res) => {
-  let { dailyRate } = req.body;
+  let { dailynormwater } = req.body;
 
-  dailyRate = Number(dailyRate);
+  dailynormwater = Number(dailynormwater);
 
-  if (isNaN(dailyRate)) {
+  if (isNaN(dailynormwater)) {
     throw createHttpError(400, 'Daily water rate must be a number');
   }
 
-  if (dailyRate > 15000 || dailyRate < 0) {
+  if (dailynormwater > 15000 || dailynormwater < 0) {
     throw createHttpError(
       400,
       'Daily water rate must be between 0 and 15000 ml.',
     );
   }
 
-  const { isNew, data } = await updateWaterRate(req.body);
+  const { _id: userId } = req.user;
+  const data = await updateWaterRate({ _id: userId }, req.body);
 
-  const status = isNew ? 201 : 200;
-
-  res.status(status).json({
-    status,
+  res.json({
+    status: 200,
     message: 'Water rate upsert successfully!',
-    data,
+    data: data.dailynormwater,
   });
 };
 
 export const addWaterConsumptionController = async (req, res) => {
-  const record = await addWaterConsumption(req.body);
+  const { _id: userId } = req.user;
+  const record = await addWaterConsumption({ ...req.body, userId });
 
   res.status(201).json({
     status: 201,
@@ -48,8 +49,9 @@ export const addWaterConsumptionController = async (req, res) => {
 
 export const updateWaterConsumptionController = async (req, res) => {
   const { id } = req.params;
+  const { _id: userId } = req.user;
   const { amount } = req.body;
-  const data = await updateWaterConsumption({ _id: id }, amount);
+  const data = await updateWaterConsumption({ _id: id, userId }, amount);
 
   if (!data) throw createHttpError(404, `Water record with id=${id} not found`);
 
@@ -62,7 +64,8 @@ export const updateWaterConsumptionController = async (req, res) => {
 
 export const deleteWaterConsumptionController = async (req, res) => {
   const { id } = req.params;
-  const data = await deleteWaterConsumption({ _id: id });
+  const { _id: userId } = req.user;
+  const data = await deleteWaterConsumption({ _id: id, userId });
 
   if (!data) throw createHttpError(404, `Water record with id=${id} not found`);
 
@@ -71,10 +74,12 @@ export const deleteWaterConsumptionController = async (req, res) => {
 
 export const getTodayWaterController = async (req, res) => {
   try {
+    const { _id: userId } = req.user;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     const waterRecords = await WaterCollection.find({
+      userId: userId,
       createdAt: { $gte: today },
     });
 
@@ -85,15 +90,16 @@ export const getTodayWaterController = async (req, res) => {
       });
     }
 
-    const waterRate = await WaterRateCollection.findOne();
-    const dailyRate = waterRate ? waterRate.dailyRate : 1500;
+    const user = await UserCollection.findById(userId);
+    const dailyRate = user.dailynormwater || 1500;
 
-    // count total + %
     const totalConsumed = waterRecords.reduce(
       (acc, record) => acc + record.amount,
       0,
     );
-    const percentage = Math.round((totalConsumed / dailyRate) * 100);
+    let percentage = Math.round((totalConsumed / dailyRate) * 100);
+
+    if (percentage > 100) percentage = 100;
 
     res.status(200).json({
       status: 200,
@@ -105,7 +111,7 @@ export const getTodayWaterController = async (req, res) => {
         records: waterRecords,
       },
     });
-  } catch (error) {
+  } catch {
     throw createHttpError(500, 'Internal server error');
   }
 };
@@ -113,11 +119,13 @@ export const getTodayWaterController = async (req, res) => {
 export const getMonthWaterController = async (req, res) => {
   try {
     const { year, month } = req.params;
+    const { _id: userId } = req.user;
 
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0);
 
     const waterRecords = await WaterCollection.find({
+      userId,
       createdAt: { $gte: startDate, $lt: endDate },
     });
 
@@ -128,10 +136,9 @@ export const getMonthWaterController = async (req, res) => {
       });
     }
 
-    const waterRate = await WaterRateCollection.findOne();
-    const dailyRate = waterRate ? waterRate.dailyRate : 1500;
+    const user = await UserCollection.findById(userId);
+    const dailyRate = user.dailynormwater || 1500;
 
-    // Group data per day
     const dailyData = {};
     waterRecords.forEach((record) => {
       const day = record.createdAt.getDate();
@@ -140,12 +147,19 @@ export const getMonthWaterController = async (req, res) => {
       dailyData[day].count += 1;
     });
 
-    const result = Object.entries(dailyData).map(([day, data]) => ({
-      date: `${day}, ${startDate.toLocaleString('default', { month: 'long' })}`,
-      dailyRate,
-      percentage: Math.round((data.totalConsumed / dailyRate) * 100),
-      consumptionCount: data.count,
-    }));
+    const result = Object.entries(dailyData).map(([day, data]) => {
+      let percentage = Math.round((data.totalConsumed / dailyRate) * 100);
+      if (percentage > 100) percentage = 100;
+
+      return {
+        date: `${day}, ${startDate.toLocaleString('default', {
+          month: 'long',
+        })}`,
+        dailyRate,
+        percentage,
+        consumptionCount: data.count,
+      };
+    });
 
     res.status(200).json({
       status: 200,
@@ -154,7 +168,7 @@ export const getMonthWaterController = async (req, res) => {
       })}`,
       data: result,
     });
-  } catch (error) {
+  } catch {
     throw createHttpError(500, 'Internal server error');
   }
 };

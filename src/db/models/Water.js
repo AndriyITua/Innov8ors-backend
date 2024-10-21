@@ -7,6 +7,11 @@ const waterSchema = new Schema(
       required: true,
       max: 5000,
     },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   {
     timestamps: true,
