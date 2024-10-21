@@ -1,0 +1,46 @@
+tags:
+  - Water
+summary: Update user water rate
+operationId: updateWaterRate
+description: 'Update a daily norma water with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - dailynormwater
+        properties:
+          dailynormwater:
+            description: 'Daily norma water'
+            type: integer
+            example: 15000
+responses:
+  '200':
+    description: 'Updates a daily norma water'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Water rate upsert successfully!'
+            data:
+              type: object
+              $ref: '../../../components/schemas/waterDailyNorma.yaml'
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

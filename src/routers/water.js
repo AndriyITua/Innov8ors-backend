@@ -16,22 +16,29 @@ import {
 import validateBody from '../utils/validateBody.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 
-import { waterAddSchema, waterUpdateSchema } from '../validation/water.js';
+import {
+  waterRateSchema,
+  waterConsumptionRecordSchema,
+} from '../validation/water.js';
 
 const waterRouter = Router();
 
 waterRouter.use(authenticate);
 
-waterRouter.put('/water-rate', ctrlWrapper(updateWaterRateController));
+waterRouter.put(
+  '/water-rate',
+  validateBody(waterRateSchema),
+  ctrlWrapper(updateWaterRateController),
+);
 waterRouter.post(
   '/',
-  validateBody(waterAddSchema),
+  validateBody(waterConsumptionRecordSchema),
   ctrlWrapper(addWaterConsumptionController),
 );
-waterRouter.put(
+waterRouter.patch(
   '/:id',
   isValidId,
-  validateBody(waterUpdateSchema),
+  validateBody(waterConsumptionRecordSchema),
   ctrlWrapper(updateWaterConsumptionController),
 );
 waterRouter.delete(
@@ -41,7 +48,6 @@ waterRouter.delete(
 );
 
 waterRouter.get('/today', ctrlWrapper(getTodayWaterController));
-
 waterRouter.get(
   '/:year/:month',
   validateDateParams,

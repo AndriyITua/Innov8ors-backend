@@ -28,6 +28,279 @@
     }
   ],
   "paths": {
+    "/water/water-rate": {
+      "put": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update user water rate",
+        "operationId": "updateWaterRate",
+        "description": "Update a daily norma water with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "dailynormwater"
+                ],
+                "properties": {
+                  "dailynormwater": {
+                    "description": "Daily norma water",
+                    "type": "integer",
+                    "example": 15000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updates a daily norma water",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Water rate upsert successfully!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/waterDailyNorma"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Add water record",
+        "operationId": "createWaterRecord",
+        "description": "Create a water consumption record with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "description": "Water consumption record",
+                    "type": "integer",
+                    "example": 5000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates a water consumption record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a water record!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/waterConsumptionRecord"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/{id}": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update water record by id",
+        "operationId": "updateWaterRecord",
+        "description": "Update a water consumption record with payload by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "description": "Id of water consumption record",
+              "type": "string",
+              "example": "6716631f18346e3929010d88"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "description": "Water consumption record",
+                    "type": "integer",
+                    "example": 5000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Creates a water consumption record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully edited water record!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/waterConsumptionRecord"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete water record by id",
+        "operationId": "deleteWaterRecord",
+        "description": "Delete a water consumption record by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "description": "Id of water consumption record",
+              "type": "string",
+              "example": "6716631f18346e3929010d88"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deletes a water consumption record"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
     "/water/today": {
       "get": {
         "tags": [
@@ -208,6 +481,60 @@
       }
     },
     "schemas": {
+      "waterDailyNorma": {
+        "type": "object",
+        "required": [
+          "dailynormwater"
+        ],
+        "properties": {
+          "dailynormwater": {
+            "description": "Daily norma water",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 15000,
+            "example": 5000
+          }
+        }
+      },
+      "waterConsumptionRecord": {
+        "type": "object",
+        "required": [
+          "amount",
+          "userId",
+          "_id",
+          "createAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "amount": {
+            "description": "Water consumption record",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5000,
+            "example": 3000
+          },
+          "userId": {
+            "description": "Id of water consumption record",
+            "type": "string",
+            "example": "6715200794e34d3781d52f98"
+          },
+          "_id": {
+            "description": "User id",
+            "type": "string",
+            "example": "67167889a06c5673417adf87"
+          },
+          "createdAt": {
+            "description": "When was created",
+            "type": "string",
+            "example": "2024-10-21T15:51:37.344Z"
+          },
+          "updatedAt": {
+            "description": "When was updated",
+            "type": "string",
+            "example": "2024-10-21T15:51:37.344Z"
+          }
+        }
+      },
       "waterRecord": {
         "type": "object",
         "required": [
@@ -300,9 +627,33 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Contact not found"
+                      "example": "/ not found"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong"
                 }
               }
             }
