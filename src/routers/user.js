@@ -11,7 +11,7 @@ import ctrlWrapper from '../utils/ctrlWrapper.js';
 import validateBody from '../utils/validateBody.js';
 import { patchUserSchema, userPhotoSchema } from '../validation/users.js';
 
-export const userRouter = Router();
+const userRouter = Router();
 
 userRouter.use(authenticate);
 
@@ -31,3 +31,5 @@ userRouter.patch(
   isValidIdUser,
   ctrlWrapper(patchUserController),
 );
+
+export default userRouter;
