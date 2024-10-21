@@ -1,17 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-
-import { env } from './utils/env.js';
-
 import logger from './middlewares/logger.js';
-import errorHandler from './middlewares/errorHandler.js';
-import notFoundHandler from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
-
+import notFoundHandler from './middlewares/notFoundHandler.js';
+import errorHandler from './middlewares/errorHandler.js';
+import authRouter from './routers/auth.js';
 import waterRouter from './routers/water.js';
-
-import { authRouter } from './routers/auth.js';
-import { userRouter } from './routers/user.js';
+import userRouter from './routers/user.js';
+import { env } from './utils/env.js';
+import swaggerDocs from './middlewares/swaggerDocs.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -30,10 +27,13 @@ export const startServer = () => {
   app.use(express.static('uploads'));
 
   app.use('/auth', authRouter);
-
+  app.use('/user', userRouter);
   app.use('/water', waterRouter);
 
-  app.use('/user', userRouter);
+  app.use('/api-docs', swaggerDocs());
+
+  // app.use('/today', todayRouter);
+  // app.use('/month', monthRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
