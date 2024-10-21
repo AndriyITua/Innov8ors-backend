@@ -15,6 +15,15 @@ const PORT = Number(env('PORT', '3000'));
 export const startServer = () => {
   const app = express();
 
+
+  const corsOptions = {
+    origin: ['https://innov8ors-frontend.vercel.app', 'http://localhost:5173'],
+    credentials: true,
+  };
+
+  app.use(cors(corsOptions));
+
+
   app.use(logger);
   app.use(cors());
   app.use(

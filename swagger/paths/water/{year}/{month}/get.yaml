@@ -1,0 +1,61 @@
+tags:
+  - Water
+summary: Get monthly water consumption
+operationId: getMonthWater
+description: 'Get water consumption for a specific month for the authenticated user'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: year
+    required: true
+    schema:
+      type: integer
+      example: 2024
+  - in: path
+    name: month
+    required: true
+    schema:
+      type: integer
+      minimum: 1
+      maximum: 12
+      example: 10
+responses:
+  '200':
+    description: 'Get water consumption for the specified month'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully retrieved water consumption for October 2024'
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    example: '15, October'
+                  dailyRate:
+                    type: integer
+                    example: 1500
+                  percentage:
+                    type: integer
+                    example: 90
+                  consumptionCount:
+                    type: integer
+                    example: 3
+  '401':
+    $ref: ..\..\..\..\components\responses\401.yaml
+  '404':
+    $ref: ..\..\..\..\components\responses\404.yaml
