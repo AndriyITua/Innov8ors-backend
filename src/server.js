@@ -15,7 +15,6 @@ const PORT = Number(env('PORT', '3000'));
 export const startServer = () => {
   const app = express();
 
-
   const corsOptions = {
     origin: ['https://innov8ors-frontend.vercel.app', 'http://localhost:5173'],
     credentials: true,
@@ -23,9 +22,8 @@ export const startServer = () => {
 
   app.use(cors(corsOptions));
 
-
   app.use(logger);
-  app.use(cors());
+
   app.use(
     express.json({
       type: ['application/json', 'application/vnd.api+json'],
@@ -40,9 +38,6 @@ export const startServer = () => {
   app.use('/water', waterRouter);
 
   app.use('/api-docs', swaggerDocs());
-
-  // app.use('/today', todayRouter);
-  // app.use('/month', monthRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
