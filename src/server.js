@@ -13,9 +13,6 @@ import waterRouter from './routers/water.js';
 import { authRouter } from './routers/auth.js';
 import { userRouter } from './routers/user.js';
 
-// import todayRouter from './routers/today.js';
-// import monthRouter from './routers/month.js';
-
 import swaggerDocs from './middlewares/swaggerDocs.js';
 
 const PORT = Number(env('PORT', '3000'));
@@ -44,8 +41,6 @@ export const startServer = () => {
   app.use('/user', userRouter);
 
   app.use('/water', waterRouter);
-  // app.use('/today', todayRouter);
-  // app.use('/month', monthRouter);
 
   app.use('/api-docs', swaggerDocs());
 

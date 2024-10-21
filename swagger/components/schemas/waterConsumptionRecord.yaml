@@ -1,0 +1,30 @@
+type: object
+required:
+  - amount
+  - userId
+  - _id
+  - createAt
+  - updatedAt
+properties:
+  amount:
+    description: 'Water consumption record'
+    type: integer
+    minimum: 0
+    maximum: 5000
+    example: 3000
+  userId:
+    description: 'Id of water consumption record'
+    type: string
+    example: '6715200794e34d3781d52f98'
+  _id:
+    description: 'User id'
+    type: string
+    example: '67167889a06c5673417adf87'
+  createdAt:
+    description: 'When was created'
+    type: string
+    example: '2024-10-21T15:51:37.344Z'
+  updatedAt:
+    description: 'When was updated'
+    type: string
+    example: '2024-10-21T15:51:37.344Z'

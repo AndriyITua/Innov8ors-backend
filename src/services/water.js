@@ -3,15 +3,12 @@ import WaterCollection from '../db/models/Water.js';
 
 export const updateWaterRate = async (filter, data) => {
   const rawResult = await UserCollection.findOneAndUpdate(filter, data, {
-    includeResultMetadata: true,
-    upsert: true,
+    returnDocument: 'after',
   });
 
-  if (!rawResult || !rawResult.value) return null;
+  if (!rawResult) return null;
 
-  return {
-    data: rawResult.value,
-  };
+  return rawResult;
 };
 
 export const addWaterConsumption = (amount) => WaterCollection.create(amount);
