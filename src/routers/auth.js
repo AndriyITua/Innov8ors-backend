@@ -18,7 +18,7 @@ import {
   resetPasswordController,
 } from '../controllers/auth.js';
 
-export const authRouter = Router();
+const authRouter = Router();
 
 authRouter.post(
   '/register',
@@ -47,3 +47,5 @@ authRouter.post(
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
+
+export default authRouter;
