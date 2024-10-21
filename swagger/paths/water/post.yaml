@@ -1,0 +1,46 @@
+tags:
+  - Water
+summary: Add water record
+operationId: createWaterRecord
+description: 'Create a water consumption record with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - amount
+        properties:
+          amount:
+            description: 'Water consumption record'
+            type: integer
+            example: 5000
+responses:
+  '201':
+    description: 'Creates a water consumption record'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Successfully created a water record!'
+            data:
+              type: object
+              $ref: '../../components/schemas/waterConsumptionRecord.yaml'
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '404':
+    $ref: ../../components/responses/404.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

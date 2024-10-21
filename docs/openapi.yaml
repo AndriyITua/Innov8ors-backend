@@ -15,6 +15,17 @@ servers:
   - url: http://localhost:3000
   - url: http://localhost:3000
 paths:
+  /water/water-rate:
+    put:
+      $ref: ../swagger/paths/water/water-rate/put.yaml
+  /water:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
+  /water/{id}:
+    patch:
+      $ref: ../swagger/paths/water/{id}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/water/{id}/delete.yaml
   /water/today:
     get:
       $ref: ../swagger/paths/water/today/get.yaml

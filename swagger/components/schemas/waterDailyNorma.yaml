@@ -1,0 +1,10 @@
+type: object
+required:
+  - dailynormwater
+properties:
+  dailynormwater:
+    description: 'Daily norma water'
+    type: integer
+    minimum: 0
+    maximum: 15000
+    example: 5000

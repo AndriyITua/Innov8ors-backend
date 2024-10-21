@@ -1,0 +1,24 @@
+tags:
+  - Water
+summary: Delete water record by id
+operationId: deleteWaterRecord
+description: 'Delete a water consumption record by id'
+security:
+  - bearerAuth: []
+parameters:
+  - name: id
+    in: path
+    required: true
+    schema:
+      description: 'Id of water consumption record'
+      type: string
+      example: '6716631f18346e3929010d88'
+responses:
+  '204':
+    description: 'Deletes a water consumption record'
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml
