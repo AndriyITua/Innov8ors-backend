@@ -11,28 +11,13 @@ import WaterCollection from '../db/models/Water.js';
 import { UserCollection } from '../db/models/User.js';
 
 export const updateWaterRateController = async (req, res) => {
-  let { dailynormwater } = req.body;
-
-  dailynormwater = Number(dailynormwater);
-
-  if (isNaN(dailynormwater)) {
-    throw createHttpError(400, 'Daily water rate must be a number');
-  }
-
-  if (dailynormwater > 15000 || dailynormwater < 0) {
-    throw createHttpError(
-      400,
-      'Daily water rate must be between 0 and 15000 ml.',
-    );
-  }
-
   const { _id: userId } = req.user;
   const data = await updateWaterRate({ _id: userId }, req.body);
 
   res.json({
     status: 200,
     message: 'Water rate upsert successfully!',
-    data: data.dailynormwater,
+    data: { dailynormwater: data.dailynormwater },
   });
 };
 
