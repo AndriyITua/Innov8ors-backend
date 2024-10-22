@@ -9,7 +9,7 @@ import { authenticate } from '../middlewares/authenticate.js';
 import { upload } from '../middlewares/uploads.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 import validateBody from '../utils/validateBody.js';
-import { patchUserSchema, userPhotoSchema } from '../validation/users.js';
+import { patchUserSchema } from '../validation/users.js';
 
 const userRouter = Router();
 
@@ -26,7 +26,6 @@ userRouter.patch(
 
 userRouter.patch(
   '/:id/avatar',
-  validateBody(userPhotoSchema),
   upload.single('userphoto'),
   isValidIdUser,
   ctrlWrapper(patchUserController),

@@ -4,8 +4,9 @@ import ctrlWrapper from '../utils/ctrlWrapper.js';
 import validateBody from '../utils/validateBody.js';
 
 import {
-  userLoginSchema,
-  userRegisterSchema,
+  // userLoginSchema,
+  // userRegisterSchema,
+  userRegisterAndLoginSchema,
   sendResetEmailSchema,
   resetPasswordSchema,
 } from '../validation/users.js';
@@ -22,13 +23,13 @@ const authRouter = Router();
 
 authRouter.post(
   '/register',
-  validateBody(userRegisterSchema),
+  validateBody(userRegisterAndLoginSchema),
   ctrlWrapper(registerController),
 );
 
 authRouter.post(
   '/login',
-  validateBody(userLoginSchema),
+  validateBody(userRegisterAndLoginSchema),
   ctrlWrapper(loginController),
 );
 
