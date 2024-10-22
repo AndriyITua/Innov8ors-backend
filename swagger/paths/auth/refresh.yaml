@@ -1,0 +1,39 @@
+tags:
+  - Auth
+summary: Refresh token
+operationId: resfreshToken
+responses:
+  '200':
+    description: Session refreshed successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully refreshed a session!'
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: 'newAccessTokenExample'
+  '401':
+    description: Invalid or expired refresh token
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Invalid or expired session'
+security:
+  - bearerAuth: []

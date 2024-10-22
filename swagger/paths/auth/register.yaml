@@ -1,0 +1,61 @@
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+            example: 'example@example.com'
+          password:
+            type: string
+            example: 'password123'
+        required:
+          - email
+          - password
+responses:
+  '201':
+    description: User successfully registered
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Successfully registered a user!'
+            data:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  example: '64e70c21a1d0f93e33c8f2a6'
+                email:
+                  type: string
+                  example: 'example@example.com'
+                username:
+                  type: string
+                  example: 'JohnDoe'
+  '409':
+    description: Email already exists
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: 'Email already exists'
+security:
+  - bearerAuth: []

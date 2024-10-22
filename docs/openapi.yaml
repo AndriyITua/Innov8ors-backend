@@ -13,27 +13,51 @@ tags:
     description: Auth operations.
 servers:
   - url: http://localhost:3000
-  - url: http://localhost:3000
+  - url: https://innov8ors-backend.onrender.com
 paths:
+  /auth/register:
+    post:
+      $ref: '../swagger/paths/auth/register.yaml'
+  /auth/login:
+    post:
+      $ref: '../swagger/paths/auth/login.yaml'
+  /auth/refresh:
+    post:
+      $ref: '../swagger/paths/auth/refresh.yaml'
+  /auth/logout:
+    post:
+      $ref: '../swagger/paths/auth/logout.yaml'
+  /user/{id}:
+    get:
+      $ref: '../swagger/paths/user/{id}/get.yaml'
+    patch:
+      $ref: '../swagger/paths/user/{id}/patch.yaml'
+  /user/{id}/avatar:
+    patch:
+      $ref: '../swagger/paths/user/{id}/patch-avatar.yaml'
+  /user/{id}/change-password:
+    patch:
+      $ref: '../swagger/paths/user/{id}/change-password.yaml'
   /water/water-rate:
     put:
-      $ref: ../swagger/paths/water/water-rate/put.yaml
+      $ref: '../swagger/paths/water/water-rate/put.yaml'
   /water:
     post:
-      $ref: ../swagger/paths/water/post.yaml
+      $ref: '../swagger/paths/water/post.yaml'
   /water/{id}:
     patch:
-      $ref: ../swagger/paths/water/{id}/patch.yaml
+      $ref: '../swagger/paths/water/{id}/patch.yaml'
     delete:
-      $ref: ../swagger/paths/water/{id}/delete.yaml
+      $ref: '../swagger/paths/water/{id}/delete.yaml'
   /water/today:
     get:
-      $ref: ../swagger/paths/water/today/get.yaml
+      $ref: '../swagger/paths/water/today/get.yaml'
   /water/{year}/{month}:
     get:
-      $ref: ../swagger/paths/water/{year}/{month}/get.yaml
+      $ref: '../swagger/paths/water/{year}/{month}/get.yaml'
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
