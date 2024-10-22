@@ -31,11 +31,11 @@ export const resetPasswordSchema = Joi.object({
 });
 
 export const patchUserSchema = Joi.object({
-  password: Joi.string().min(8).max(64),
+  // password: Joi.string().min(8).max(64),
   username: Joi.string(),
   email: Joi.string().pattern(emailRegexp),
   gender: Joi.string().valid('woman', 'man'),
-  dailynormwater: Joi.number().min(0).max(15000),
+  dailynormwater: Joi.number().min(0),
 });
 
 // export const userPhotoSchema = Joi.object({
