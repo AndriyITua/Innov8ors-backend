@@ -1,0 +1,22 @@
+tags:
+  - Auth
+summary: Logout a user
+operationId: logoutUser
+responses:
+  '204':
+    description: Successfully logged out
+  '401':
+    description: Session not found or expired
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Session not found'
+security:
+  - bearerAuth: []

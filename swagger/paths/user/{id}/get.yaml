@@ -1,0 +1,53 @@
+tags:
+  - User
+summary: Get information about user
+operationId: getUser
+parameters:
+  - in: path
+    name: id
+    schema:
+      type: string
+      example: '64e70c21a1d0f93e33c8f2a6'
+    required: true
+    description: The user's ID
+responses:
+  '200':
+    description: Successfully found user by ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully found user by ID!'
+            data:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  example: '64e70c21a1d0f93e33c8f2a6'
+                email:
+                  type: string
+                  example: 'example@example.com'
+                username:
+                  type: string
+                  example: 'JohnDoe'
+  '404':
+    description: User not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'User not found'
+security:
+  - bearerAuth: []
