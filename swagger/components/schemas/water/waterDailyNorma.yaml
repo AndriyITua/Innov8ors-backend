@@ -3,8 +3,8 @@ required:
   - dailynormwater
 properties:
   dailynormwater:
-    description: 'Daily norma water'
     type: integer
+    example: 5000
     minimum: 0
     maximum: 15000
-    example: 5000
+    description: 'Daily norma water'

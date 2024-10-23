@@ -41,7 +41,7 @@ responses:
                 records:
                   type: array
                   items:
-                    $ref: '../../../components/schemas/waterRecord.yaml'
+                    $ref: '../../../components/schemas/water/waterRecord.yaml'
   '401':
     $ref: ..\..\..\components\responses\401.yaml
   '404':

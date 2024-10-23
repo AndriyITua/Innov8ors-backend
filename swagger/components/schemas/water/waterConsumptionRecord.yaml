@@ -13,20 +13,20 @@ properties:
     maximum: 5000
     example: 3000
   userId:
-    description: 'Id of water consumption record'
     type: string
     example: '6715200794e34d3781d52f98'
+    description: 'Id of water consumption record'
   _id:
-    description: 'User id'
     type: string
     example: '67167889a06c5673417adf87'
+    description: 'User id'
   createdAt:
+    type: string
+    format: date-time
+    example: '2024-10-21T15:51:37.344Z'
     description: 'When was created'
-    type: string
-    format: date-time
-    example: '2024-10-21T15:51:37.344Z'
   updatedAt:
-    description: 'When was updated'
     type: string
     format: date-time
     example: '2024-10-21T15:51:37.344Z'
+    description: 'When was updated'

@@ -1,0 +1,18 @@
+type: object
+properties:
+  username:
+    type: string
+    example: 'JohnDoe'
+  email:
+    type: string
+    example: 'newemail@example.com'
+    pattern: '^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$'
+  gender:
+    type: string
+    example: 'man'
+    enum: ['woman', 'man']
+  dailynormwater:
+    type: number
+    example: 2500
+    minimum: 0
+    maximum: 15000

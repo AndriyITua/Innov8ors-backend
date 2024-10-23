@@ -9,14 +9,7 @@ requestBody:
   content:
     application/json:
       schema:
-        type: object
-        required:
-          - dailynormwater
-        properties:
-          dailynormwater:
-            description: 'Daily norma water'
-            type: integer
-            example: 15000
+        $ref: '../../../components/schemas/water/waterDailyNorma.yaml'
 responses:
   '200':
     description: 'Updates a daily norma water'
@@ -37,7 +30,7 @@ responses:
               example: 'Water rate upsert successfully!'
             data:
               type: object
-              $ref: '../../../components/schemas/waterDailyNorma.yaml'
+              $ref: '../../../components/schemas/water/waterDailyNorma.yaml'
   '401':
     $ref: ../../../components/responses/401.yaml
   '404':
