@@ -15,20 +15,7 @@ requestBody:
   content:
     application/json:
       schema:
-        type: object
-        properties:
-          username:
-            type: string
-            example: 'JohnDoe'
-          email:
-            type: string
-            example: 'newemail@example.com'
-          gender:
-            type: string
-            example: 'man'
-          dailynormwater:
-            type: number
-            example: 2500
+        $ref: ../../../components/schemas/user/patchUser.yaml
 responses:
   '200':
     description: Successfully updated user

@@ -42,6 +42,12 @@ export const startServer = () => {
 
   app.use('/api-docs', swaggerDocs());
 
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'Hello world!',
+    });
+  });
+
   app.use(notFoundHandler);
   app.use(errorHandler);
 

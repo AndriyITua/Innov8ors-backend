@@ -1,0 +1,13 @@
+type: object
+required:
+  - email
+  - password
+properties:
+  email:
+    type: string
+    example: 'example@example.com'
+    pattern: '^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$'
+  password:
+    type: string
+    example: 'password123'
+    minLength: 8

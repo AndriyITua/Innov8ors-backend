@@ -3,16 +3,24 @@ required:
   - id
   - amount
   - createdAt
+  - updatedAt
 properties:
   id:
     type: string
     example: '65ca67e7ae7f10c88b598384'
   amount:
     type: integer
-    description: 'Amount of water consumed in ml'
     example: 300
+    minimum: 0
+    maximum: 5000
+    description: 'Amount of water consumed in ml'
   createdAt:
     type: string
     format: date-time
-    description: 'Time when the water consumption was recorded'
     example: '2024-10-16T14:48:00.000Z'
+    description: 'Time when the water consumption was recorded'
+  updatedAt:
+    type: string
+    format: date-time
+    example: '2024-10-16T14:48:00.000Z'
+    description: 'Time when the water consumption was updated'
