@@ -4,13 +4,18 @@ import {
   getUserByIdController,
   patchUserController,
   changePasswordController,
+  changeEmailController,
 } from '../controllers/user.js';
 import { isValidIdUser } from '../middlewares/isValidId.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { upload } from '../middlewares/uploads.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 import validateBody from '../utils/validateBody.js';
-import { patchUserSchema, changePasswordSchema } from '../validation/users.js';
+import {
+  patchUserSchema,
+  changePasswordSchema,
+  changeEmailSchema,
+} from '../validation/users.js';
 
 const userRouter = Router();
 
@@ -36,6 +41,12 @@ userRouter.patch(
   '/:id/change-password',
   validateBody(changePasswordSchema),
   ctrlWrapper(changePasswordController),
+);
+
+userRouter.patch(
+  '/:id/change-email',
+  validateBody(changeEmailSchema),
+  ctrlWrapper(changeEmailController),
 );
 
 export default userRouter;

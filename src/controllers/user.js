@@ -4,6 +4,7 @@ import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { env } from '../utils/env.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import bcrypt from 'bcrypt';
+import { UserCollection } from '../db/models/User.js';
 
 const enableClaudinary = env('ENABLE_CLOUDINARY');
 
@@ -84,5 +85,24 @@ export const changePasswordController = async (req, res) => {
   res.json({
     status: 200,
     message: 'Password updated successfully',
+  });
+};
+
+export const changeEmailController = async (req, res) => {
+  const { email } = req.body;
+  const userId = req.params.id;
+
+  const user = await UserCollection.findById(userId);
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  user.email = email;
+  const updatedUser = await user.save();
+
+  res.json({
+    status: 200,
+    message: 'Email updated successfully',
+    user: updatedUser,
   });
 };

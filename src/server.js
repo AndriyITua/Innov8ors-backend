@@ -6,7 +6,7 @@ import logger from './middlewares/logger.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
 import swaggerDocs from './middlewares/swaggerDocs.js';
-
+import handleUniqueError from './middlewares/handleUniqueError.js';
 import authRouter from './routers/auth.js';
 import waterRouter from './routers/water.js';
 import userRouter from './routers/user.js';
@@ -48,6 +48,7 @@ export const startServer = () => {
     });
   });
 
+  app.use(handleUniqueError);
   app.use(notFoundHandler);
   app.use(errorHandler);
 

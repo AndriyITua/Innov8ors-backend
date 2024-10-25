@@ -49,6 +49,7 @@ export const register = async (payload) => {
 
 export const login = async (payload) => {
   const { email, password } = payload;
+
   const user = await UserCollection.findOne({ email });
   if (!user) {
     throw createHttpError(401, 'Email invalid');
@@ -62,13 +63,16 @@ export const login = async (payload) => {
   await SessionCollection.deleteOne({ userId: user._id });
 
   const sessionData = createSession();
-
   const userSession = await SessionCollection.create({
     userId: user._id,
     ...sessionData,
   });
 
-  return userSession;
+  return {
+    session: userSession,
+    userId: user._id,
+    userphoto: user.userphoto,
+  };
 };
 
 export const findSessionByAccessToken = (accessToken) =>
