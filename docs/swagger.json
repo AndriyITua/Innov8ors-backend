@@ -290,25 +290,13 @@
         ]
       }
     },
-    "/user/{id}": {
+    "/user/userInfo": {
       "get": {
         "tags": [
           "User"
         ],
         "summary": "Get information about user",
         "operationId": "getUser",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "example": "64e70c21a1d0f93e33c8f2a6"
-            },
-            "required": true,
-            "description": "The user's ID"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successfully found user by ID",
@@ -380,18 +368,6 @@
         ],
         "summary": "Change information about user",
         "operationId": "patchUser",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "example": "64e70c21a1d0f93e33c8f2a6"
-            },
-            "required": true,
-            "description": "The user's ID"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -471,25 +447,13 @@
         ]
       }
     },
-    "/user/{id}/avatar": {
+    "/user/userInfo/avatar": {
       "patch": {
         "tags": [
           "User"
         ],
         "summary": "Change user avatar",
         "operationId": "changeUserAvatar",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "example": "64e70c21a1d0f93e33c8f2a6"
-            },
-            "required": true,
-            "description": "The user's ID"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -576,25 +540,13 @@
         ]
       }
     },
-    "/user/{id}/change-password": {
+    "/user/userInfo/change-password": {
       "patch": {
         "tags": [
           "User"
         ],
         "summary": "Change user password",
         "operationId": "changeUserPassword",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "example": "64e70c21a1d0f93e33c8f2a6"
-            },
-            "required": true,
-            "description": "The user's ID"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {

@@ -6,7 +6,6 @@ import {
   changePasswordController,
   changeEmailController,
 } from '../controllers/user.js';
-import { isValidIdUser } from '../middlewares/isValidId.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { upload } from '../middlewares/uploads.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
@@ -21,30 +20,28 @@ const userRouter = Router();
 
 userRouter.use(authenticate);
 
-userRouter.get('/:id', isValidIdUser, ctrlWrapper(getUserByIdController));
+userRouter.get('/userInfo', ctrlWrapper(getUserByIdController));
 
 userRouter.patch(
-  '/:id',
-  isValidIdUser,
+  '/userInfo',
   validateBody(patchUserSchema),
   ctrlWrapper(patchUserController),
 );
 
 userRouter.patch(
-  '/:id/avatar',
+  '/userInfo/avatar',
   upload.single('userphoto'),
-  isValidIdUser,
   ctrlWrapper(patchUserController),
 );
 
 userRouter.patch(
-  '/:id/change-password',
+  '/userInfo/change-password',
   validateBody(changePasswordSchema),
   ctrlWrapper(changePasswordController),
 );
 
 userRouter.patch(
-  '/:id/change-email',
+  '/userInfo/change-email',
   validateBody(changeEmailSchema),
   ctrlWrapper(changeEmailController),
 );

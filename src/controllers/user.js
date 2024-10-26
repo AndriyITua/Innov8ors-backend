@@ -5,11 +5,13 @@ import { env } from '../utils/env.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import bcrypt from 'bcrypt';
 import { UserCollection } from '../db/models/User.js';
+import mongoose from 'mongoose';
 
 const enableClaudinary = env('ENABLE_CLOUDINARY');
 
 export const getUserByIdController = async (req, res) => {
-  const { id } = req.params;
+  let { id } = req.user._id;
+  id = new mongoose.Types.ObjectId(id);
   const data = await getUserById(id);
 
   if (!data) {
@@ -35,10 +37,8 @@ export const patchUserController = async (req, res) => {
     req.body.userphoto = userphoto;
   }
 
-  const { id } = req.params;
-  console.log(
-    `Patch user request for ID: ${id} with body: ${JSON.stringify(req.body)}`,
-  );
+  let { id } = req.user._id;
+  id = new mongoose.Types.ObjectId(id);
 
   const result = await patchUser({ _id: id }, req.body);
 
@@ -55,9 +55,10 @@ export const patchUserController = async (req, res) => {
 
 export const changePasswordController = async (req, res) => {
   const { password, newPassword, repeatNewPassword } = req.body;
-  const userId = req.params.id;
+  let { id } = req.user._id;
+  id = new mongoose.Types.ObjectId(id);
 
-  const user = await getUserById(userId);
+  const user = await getUserById(id);
   if (!user) {
     throw createHttpError(404, 'User not found');
   }
@@ -74,7 +75,7 @@ export const changePasswordController = async (req, res) => {
   const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
   const updatedUser = await patchUser(
-    { _id: userId },
+    { _id: id },
     { password: hashedNewPassword },
   );
 
@@ -90,9 +91,10 @@ export const changePasswordController = async (req, res) => {
 
 export const changeEmailController = async (req, res) => {
   const { email } = req.body;
-  const userId = req.params.id;
+  let { id } = req.user._id;
+  id = new mongoose.Types.ObjectId(id);
 
-  const user = await UserCollection.findById(userId);
+  const user = await UserCollection.findById(id);
   if (!user) {
     throw createHttpError(404, 'User not found');
   }
