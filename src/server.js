@@ -21,6 +21,7 @@ export const startServer = () => {
   const corsOptions = {
     origin: ['https://innov8ors-frontend.vercel.app', 'http://localhost:5173'],
     credentials: true,
+    methods: '*',
   };
 
   app.use(cors(corsOptions));
