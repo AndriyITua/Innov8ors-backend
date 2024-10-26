@@ -1,24 +1,21 @@
 tags:
   - User
-summary: Change information about user
-operationId: patchUser
-parameters:
-  - in: path
-    name: id
-    schema:
-      type: string
-      example: '64e70c21a1d0f93e33c8f2a6'
-    required: true
-    description: The user's ID
+summary: Change user avatar
+operationId: changeUserAvatar
 requestBody:
   required: true
   content:
-    application/json:
+    multipart/form-data:
       schema:
-        $ref: ../../../components/schemas/user/patchUser.yaml
+        type: object
+        properties:
+          userphoto:
+            type: string
+            format: binary
+            description: "User's avatar image"
 responses:
   '200':
-    description: Successfully updated user
+    description: Successfully updated user's avatar
     content:
       application/json:
         schema:
@@ -29,9 +26,9 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully updated user!'
+              example: "Successfully updated user's avatar!"
   '400':
-    description: Invalid request data
+    description: Invalid file format
     content:
       application/json:
         schema:
@@ -42,7 +39,7 @@ responses:
               example: 400
             message:
               type: string
-              example: 'Validation error'
+              example: 'Invalid file format'
   '404':
     description: User not found
     content:

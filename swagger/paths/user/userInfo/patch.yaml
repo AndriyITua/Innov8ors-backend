@@ -1,24 +1,16 @@
 tags:
   - User
-summary: Change user password
-operationId: changeUserPassword
-parameters:
-  - in: path
-    name: id
-    schema:
-      type: string
-      example: '64e70c21a1d0f93e33c8f2a6'
-    required: true
-    description: The user's ID
+summary: Change information about user
+operationId: patchUser
 requestBody:
   required: true
   content:
     application/json:
       schema:
-        $ref: ../../../components/schemas/user/changePassword.yaml
+        $ref: ../../../components/schemas/user/patchUser.yaml
 responses:
   '200':
-    description: Successfully changed password
+    description: Successfully updated user
     content:
       application/json:
         schema:
@@ -29,9 +21,9 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Password successfully changed'
+              example: 'Successfully updated user!'
   '400':
-    description: Validation error
+    description: Invalid request data
     content:
       application/json:
         schema:
