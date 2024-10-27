@@ -11,14 +11,15 @@ export const updateWaterRate = async (filter, data) => {
   return rawResult;
 };
 
-export const addWaterConsumption = (amount) => WaterCollection.create(amount);
+export const addWaterConsumption = async (data) => {
+  const record = await WaterCollection.create(data);
+  return WaterCollection.findById(record._id).select('-createdAt -updatedAt');
+};
 
-export const updateWaterConsumption = async (filter, newAmount) => {
-  const updatedRecord = await WaterCollection.findOneAndUpdate(
-    filter,
-    { amount: newAmount },
-    { new: true },
-  );
+export const updateWaterConsumption = async (filter, data) => {
+  const updatedRecord = await WaterCollection.findOneAndUpdate(filter, data, {
+    new: true,
+  }).select('-createdAt -updatedAt');
 
   return updatedRecord;
 };

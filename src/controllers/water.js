@@ -35,8 +35,11 @@ export const addWaterConsumptionController = async (req, res) => {
 export const updateWaterConsumptionController = async (req, res) => {
   const { id } = req.params;
   const { _id: userId } = req.user;
-  const { amount } = req.body;
-  const data = await updateWaterConsumption({ _id: id, userId }, amount);
+  const { amount, consumptionTime } = req.body;
+  const data = await updateWaterConsumption(
+    { _id: id, userId },
+    { amount, consumptionTime },
+  );
 
   if (!data) throw createHttpError(404, `Water record with id=${id} not found`);
 

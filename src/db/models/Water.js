@@ -7,6 +7,10 @@ const waterSchema = new Schema(
       required: true,
       max: 5000,
     },
+    consumptionTime: {
+      type: String,
+      required: true,
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'user',

@@ -1,0 +1,26 @@
+type: object
+required:
+  - _id
+  - amount
+  - consumptionTime
+  - userId
+properties:
+  _id:
+    type: string
+    example: '67167889a06c5673417adf87'
+    description: 'User id'
+  amount:
+    description: 'Water consumption record'
+    type: integer
+    minimum: 0
+    maximum: 5000
+    example: 3000
+  consumptionTime:
+    description: 'When the record of water consumption was made'
+    type: string
+    pattern: '/^(1[0-2]|0?[1-9]):([0-5][0-9]) (AM|PM)$/i'
+    example: '09:09 PM'
+  userId:
+    type: string
+    example: '6715200794e34d3781d52f98'
+    description: 'Id of water consumption record'
