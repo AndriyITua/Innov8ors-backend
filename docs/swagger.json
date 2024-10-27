@@ -758,7 +758,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/waterConsumptionRecord"
+                "$ref": "#/components/schemas/requestWaterConsumptionRecord"
               }
             }
           }
@@ -786,7 +786,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/waterConsumptionRecord"
+                      "$ref": "#/components/schemas/responseWaterConsumptionRecord"
                     }
                   }
                 }
@@ -834,7 +834,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/waterConsumptionRecord"
+                "$ref": "#/components/schemas/requestWaterConsumptionRecord"
               }
             }
           }
@@ -862,7 +862,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/waterConsumptionRecord"
+                      "$ref": "#/components/schemas/responseWaterConsumptionRecord"
                     }
                   }
                 }
@@ -1185,14 +1185,11 @@
           }
         }
       },
-      "waterConsumptionRecord": {
+      "requestWaterConsumptionRecord": {
         "type": "object",
         "required": [
           "amount",
-          "userId",
-          "_id",
-          "createAt",
-          "updatedAt"
+          "consumptionTime"
         ],
         "properties": {
           "amount": {
@@ -1202,27 +1199,45 @@
             "maximum": 5000,
             "example": 3000
           },
-          "userId": {
+          "consumptionTime": {
+            "description": "When the record of water consumption was made",
             "type": "string",
-            "example": "6715200794e34d3781d52f98",
-            "description": "Id of water consumption record"
-          },
+            "pattern": "/^(1[0-2]|0?[1-9]):([0-5][0-9]) (AM|PM)$/i",
+            "example": "09:09 PM"
+          }
+        }
+      },
+      "responseWaterConsumptionRecord": {
+        "type": "object",
+        "required": [
+          "_id",
+          "amount",
+          "consumptionTime",
+          "userId"
+        ],
+        "properties": {
           "_id": {
             "type": "string",
             "example": "67167889a06c5673417adf87",
             "description": "User id"
           },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-10-21T15:51:37.344Z",
-            "description": "When was created"
+          "amount": {
+            "description": "Water consumption record",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5000,
+            "example": 3000
           },
-          "updatedAt": {
+          "consumptionTime": {
+            "description": "When the record of water consumption was made",
             "type": "string",
-            "format": "date-time",
-            "example": "2024-10-21T15:51:37.344Z",
-            "description": "When was updated"
+            "pattern": "/^(1[0-2]|0?[1-9]):([0-5][0-9]) (AM|PM)$/i",
+            "example": "09:09 PM"
+          },
+          "userId": {
+            "type": "string",
+            "example": "6715200794e34d3781d52f98",
+            "description": "Id of water consumption record"
           }
         }
       },

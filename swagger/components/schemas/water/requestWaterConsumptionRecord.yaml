@@ -1,0 +1,16 @@
+type: object
+required:
+  - amount
+  - consumptionTime
+properties:
+  amount:
+    description: 'Water consumption record'
+    type: integer
+    minimum: 0
+    maximum: 5000
+    example: 3000
+  consumptionTime:
+    description: 'When the record of water consumption was made'
+    type: string
+    pattern: '/^(1[0-2]|0?[1-9]):([0-5][0-9]) (AM|PM)$/i'
+    example: '09:09 PM'
