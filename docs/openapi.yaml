@@ -37,6 +37,9 @@ paths:
   /user/userInfo/change-password:
     patch:
       $ref: '../swagger/paths/user/userInfo/change-password.yaml'
+  /user/userInfo/change-email:
+    patch:
+      $ref: '../swagger/paths/user/userInfo/change-email.yaml'
   /water/water-rate:
     put:
       $ref: '../swagger/paths/water/water-rate/put.yaml'

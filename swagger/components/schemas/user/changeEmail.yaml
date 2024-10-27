@@ -1,0 +1,10 @@
+type: object
+properties:
+  email:
+    type: string
+    format: email
+    description: 'Email in a valid format (e.g., example@domain.com)'
+    example: 'user@example.com'
+    pattern: "/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/" 
+required:
+  - email
