@@ -6,4 +6,5 @@ export const waterRateSchema = Joi.object({
 
 export const waterConsumptionRecordSchema = Joi.object({
   amount: Joi.number().min(0).max(5000).required(),
+  createdAt: Joi.date().optional(),
 });
