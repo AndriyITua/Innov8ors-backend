@@ -17,7 +17,7 @@ requestBody:
   content:
     application/json:
       schema:
-        $ref: '../../../components/schemas/water/waterConsumptionRecord.yaml'
+        $ref: ../../../components/schemas/water/requestWaterConsumptionRecord.yaml
 responses:
   '200':
     description: 'Creates a water consumption record'
@@ -38,7 +38,7 @@ responses:
               example: 'Successfully edited water record!'
             data:
               type: object
-              $ref: '../../../components/schemas/water/waterConsumptionRecord.yaml'
+              $ref: ../../../components/schemas/water/responseWaterConsumptionRecord.yaml
   '401':
     $ref: ../../../components/responses/401.yaml
   '404':
