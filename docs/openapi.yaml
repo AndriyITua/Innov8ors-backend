@@ -12,7 +12,6 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: http://localhost:3000
   - url: https://innov8ors-backend.onrender.com
 paths:
   /auth/register:
