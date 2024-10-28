@@ -121,6 +121,7 @@ export const getMonthWaterController = async (req, res) => {
       return res.status(404).json({
         status: 404,
         message: 'No water consumption records for the selected month',
+        data: [],
       });
     }
 
